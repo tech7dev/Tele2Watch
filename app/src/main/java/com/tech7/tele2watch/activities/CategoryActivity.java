@@ -1,4 +1,4 @@
-package com.tech7.livetv.activities;
+package com.tech7.tele2watch.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 
-import com.tech7.livetv.R;
-import com.tech7.livetv.utils.Tools;
+import com.tech7.tele2watch.R;
+import com.tech7.tele2watch.utils.Tools;
 
 public class CategoryActivity extends AppCompatActivity {
 

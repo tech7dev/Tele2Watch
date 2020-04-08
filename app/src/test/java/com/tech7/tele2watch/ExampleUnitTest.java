@@ -1,4 +1,4 @@
-package com.tech7.livetv;
+package com.tech7.tele2watch;
 
 import org.junit.Test;
 

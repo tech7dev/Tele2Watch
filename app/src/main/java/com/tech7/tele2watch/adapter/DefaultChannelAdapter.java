@@ -1,4 +1,4 @@
-package com.tech7.livetv.adapter;
+package com.tech7.tele2watch.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,17 +12,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.tech7.livetv.R;
-import com.tech7.livetv.object.Channel;
+import com.tech7.tele2watch.R;
+import com.tech7.tele2watch.object.Channel;
 
 import java.util.List;
 
-public class ChannelAdapterDocumentary extends RecyclerView.Adapter<ChannelAdapterDocumentary.ViewHolder> {
+public class DefaultChannelAdapter extends RecyclerView.Adapter<DefaultChannelAdapter.ViewHolder> {
     LayoutInflater inflater;
     List<Channel> channels;
-    private RecyclerViewClickListenerDocumentary listener;
+    private RecyclerViewClickListener listener;
 
-    public ChannelAdapterDocumentary(Context ctx, List<Channel> channels, RecyclerViewClickListenerDocumentary listener){
+    public DefaultChannelAdapter(Context ctx, List<Channel> channels, RecyclerViewClickListener listener){
         this.inflater = LayoutInflater.from(ctx);
         this.channels = channels;
         this.listener = listener;
@@ -31,7 +31,7 @@ public class ChannelAdapterDocumentary extends RecyclerView.Adapter<ChannelAdapt
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_channel,parent,false);
+        View view = inflater.inflate(R.layout.list_item_default_channel,parent,false);
         return new ViewHolder(view, listener);
     }
 
@@ -53,7 +53,7 @@ public class ChannelAdapterDocumentary extends RecyclerView.Adapter<ChannelAdapt
         ImageView Tvg_logo;
         CardView cardview;
 
-        public ViewHolder(@NonNull View itemView, final RecyclerViewClickListenerDocumentary listener){
+        public ViewHolder(@NonNull View itemView, final RecyclerViewClickListener listener){
             super(itemView);
             Group_title = itemView.findViewById(R.id.txtGroup_title);
             Tvg_logo = itemView.findViewById(R.id.imgTvg_logo);
@@ -63,7 +63,7 @@ public class ChannelAdapterDocumentary extends RecyclerView.Adapter<ChannelAdapt
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.onDocumRowClicked(getAdapterPosition());
+                        listener.onRowClicked(getAdapterPosition());
                 }
             });
 
@@ -71,7 +71,7 @@ public class ChannelAdapterDocumentary extends RecyclerView.Adapter<ChannelAdapt
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.onDocumViewClicked(v, getAdapterPosition());
+                        listener.onViewClicked(v, getAdapterPosition());
                 }
             });
         }
@@ -82,9 +82,9 @@ public class ChannelAdapterDocumentary extends RecyclerView.Adapter<ChannelAdapt
         return channels.get(position);
     }
 
-    public interface RecyclerViewClickListenerDocumentary {
+    public interface RecyclerViewClickListener {
 
-        void onDocumRowClicked(int position);
-        void onDocumViewClicked(View v, int position);
+        void onRowClicked(int position);
+        void onViewClicked(View v, int position);
     }
 }

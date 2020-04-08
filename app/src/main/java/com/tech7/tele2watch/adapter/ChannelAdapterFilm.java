@@ -1,4 +1,4 @@
-package com.tech7.livetv.adapter;
+package com.tech7.tele2watch.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,17 +12,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.tech7.livetv.R;
-import com.tech7.livetv.object.Channel;
+import com.tech7.tele2watch.R;
+import com.tech7.tele2watch.object.Channel;
 
 import java.util.List;
 
-public class ChannelAdapterSport extends RecyclerView.Adapter<ChannelAdapterSport.ViewHolder> {
+public class ChannelAdapterFilm extends RecyclerView.Adapter<ChannelAdapterFilm.ViewHolder> {
     LayoutInflater inflater;
     List<Channel> channels;
-    private RecyclerViewClickListenerSport listener;
+    private RecyclerViewClickListenerFilm listener;
 
-    public ChannelAdapterSport(Context ctx, List<Channel> channels, RecyclerViewClickListenerSport listener){
+    public ChannelAdapterFilm(Context ctx, List<Channel> channels, RecyclerViewClickListenerFilm listener){
         this.inflater = LayoutInflater.from(ctx);
         this.channels = channels;
         this.listener = listener;
@@ -53,7 +53,7 @@ public class ChannelAdapterSport extends RecyclerView.Adapter<ChannelAdapterSpor
         ImageView Tvg_logo;
         CardView cardview;
 
-        public ViewHolder(@NonNull View itemView, final RecyclerViewClickListenerSport listener){
+        public ViewHolder(@NonNull View itemView, final RecyclerViewClickListenerFilm listener){
             super(itemView);
             Group_title = itemView.findViewById(R.id.txtGroup_title);
             Tvg_logo = itemView.findViewById(R.id.imgTvg_logo);
@@ -63,7 +63,7 @@ public class ChannelAdapterSport extends RecyclerView.Adapter<ChannelAdapterSpor
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.onSportRowClicked(getAdapterPosition());
+                        listener.onFilmRowClicked(getAdapterPosition());
                 }
             });
 
@@ -71,7 +71,7 @@ public class ChannelAdapterSport extends RecyclerView.Adapter<ChannelAdapterSpor
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.onSportViewClicked(v, getAdapterPosition());
+                        listener.onFilmViewClicked(v, getAdapterPosition());
                 }
             });
         }
@@ -82,9 +82,9 @@ public class ChannelAdapterSport extends RecyclerView.Adapter<ChannelAdapterSpor
         return channels.get(position);
     }
 
-    public interface RecyclerViewClickListenerSport {
+    public interface RecyclerViewClickListenerFilm {
 
-        void onSportRowClicked(int position);
-        void onSportViewClicked(View v, int position);
+        void onFilmRowClicked(int position);
+        void onFilmViewClicked(View v, int position);
     }
 }

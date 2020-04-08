@@ -1,4 +1,4 @@
-package com.tech7.livetv.object;
+package com.tech7.tele2watch.object;
 
 public class Channel {
     private String Tvg_logo;

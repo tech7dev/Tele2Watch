@@ -1,4 +1,4 @@
-package com.tech7.livetv.activities;
+package com.tech7.tele2watch.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.tech7.livetv.R;
+import com.tech7.tele2watch.R;
 
 public class IntroActivity extends AppCompatActivity {
 

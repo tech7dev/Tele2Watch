@@ -1,4 +1,4 @@
-package com.tech7.livetv.adapter;
+package com.tech7.tele2watch.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,20 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
-import com.tech7.livetv.R;
-import com.tech7.livetv.object.Channel;
+import com.tech7.tele2watch.R;
+import com.tech7.tele2watch.object.Channel;
+
 import java.util.List;
 
-public class ChannelAdapterNews extends RecyclerView.Adapter<ChannelAdapterNews.ViewHolder> {
+public class ChannelAdapterDocumentary extends RecyclerView.Adapter<ChannelAdapterDocumentary.ViewHolder> {
     LayoutInflater inflater;
     List<Channel> channels;
-    private RecyclerViewClickListenerNews listener;
+    private RecyclerViewClickListenerDocumentary listener;
 
-    public ChannelAdapterNews(Context ctx, List<Channel> channels, RecyclerViewClickListenerNews listener){
+    public ChannelAdapterDocumentary(Context ctx, List<Channel> channels, RecyclerViewClickListenerDocumentary listener){
         this.inflater = LayoutInflater.from(ctx);
         this.channels = channels;
         this.listener = listener;
@@ -50,7 +53,7 @@ public class ChannelAdapterNews extends RecyclerView.Adapter<ChannelAdapterNews.
         ImageView Tvg_logo;
         CardView cardview;
 
-        public ViewHolder(@NonNull View itemView, final RecyclerViewClickListenerNews listener){
+        public ViewHolder(@NonNull View itemView, final RecyclerViewClickListenerDocumentary listener){
             super(itemView);
             Group_title = itemView.findViewById(R.id.txtGroup_title);
             Tvg_logo = itemView.findViewById(R.id.imgTvg_logo);
@@ -60,7 +63,7 @@ public class ChannelAdapterNews extends RecyclerView.Adapter<ChannelAdapterNews.
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.onNewsRowClicked(getAdapterPosition());
+                        listener.onDocumRowClicked(getAdapterPosition());
                 }
             });
 
@@ -68,7 +71,7 @@ public class ChannelAdapterNews extends RecyclerView.Adapter<ChannelAdapterNews.
                 @Override
                 public void onClick(View v) {
                     if(listener != null)
-                        listener.onNewsViewClicked(v, getAdapterPosition());
+                        listener.onDocumViewClicked(v, getAdapterPosition());
                 }
             });
         }
@@ -79,9 +82,9 @@ public class ChannelAdapterNews extends RecyclerView.Adapter<ChannelAdapterNews.
         return channels.get(position);
     }
 
-    public interface RecyclerViewClickListenerNews {
+    public interface RecyclerViewClickListenerDocumentary {
 
-        void onNewsRowClicked(int position);
-        void onNewsViewClicked(View v, int position);
+        void onDocumRowClicked(int position);
+        void onDocumViewClicked(View v, int position);
     }
 }

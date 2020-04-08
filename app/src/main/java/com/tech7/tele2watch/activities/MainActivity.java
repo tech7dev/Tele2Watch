@@ -1,4 +1,4 @@
-package com.tech7.livetv.activities;
+package com.tech7.tele2watch.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,14 +24,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
-import com.tech7.livetv.R;
-import com.tech7.livetv.adapter.ChannelAdapterDivertissement;
-import com.tech7.livetv.adapter.ChannelAdapterNews;
-import com.tech7.livetv.adapter.ChannelAdapterDocumentary;
-import com.tech7.livetv.adapter.ChannelAdapterFilm;
-import com.tech7.livetv.adapter.ChannelAdapterSport;
-import com.tech7.livetv.object.Channel;
-import com.tech7.livetv.utils.Tools;
+import com.tech7.tele2watch.R;
+import com.tech7.tele2watch.adapter.ChannelAdapterDivertissement;
+import com.tech7.tele2watch.adapter.ChannelAdapterNews;
+import com.tech7.tele2watch.adapter.ChannelAdapterDocumentary;
+import com.tech7.tele2watch.adapter.ChannelAdapterFilm;
+import com.tech7.tele2watch.adapter.ChannelAdapterSport;
+import com.tech7.tele2watch.object.Channel;
+import com.tech7.tele2watch.utils.Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;

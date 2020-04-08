@@ -1,4 +1,4 @@
-package com.tech7.livetv.activities;
+package com.tech7.tele2watch.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +12,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.tech7.livetv.R;
-import com.tech7.livetv.adapter.DefaultChannelAdapter;
-import com.tech7.livetv.object.Channel;
-import com.tech7.livetv.utils.Tools;
+import com.tech7.tele2watch.R;
+import com.tech7.tele2watch.adapter.DefaultChannelAdapter;
+import com.tech7.tele2watch.object.Channel;
+import com.tech7.tele2watch.utils.Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,11 +29,8 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChannelsByCountryActivity extends AppCompatActivity implements DefaultChannelAdapter.RecyclerViewClickListener {
 

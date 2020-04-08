@@ -1,4 +1,4 @@
-package com.tech7.livetv.activities;
+package com.tech7.tele2watch.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,7 +22,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.tech7.livetv.R;
+import com.tech7.tele2watch.R;
 
 public class TvShowActivity3 extends AppCompatActivity {
 

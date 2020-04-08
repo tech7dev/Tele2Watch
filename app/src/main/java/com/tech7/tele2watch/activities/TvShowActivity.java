@@ -1,4 +1,4 @@
-package com.tech7.livetv.activities;
+package com.tech7.tele2watch.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -24,15 +24,16 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.tech7.livetv.R;
+import com.tech7.tele2watch.R;
 
-public class TvShowActivity2 extends AppCompatActivity {
+public class TvShowActivity extends AppCompatActivity {
 
-    //News Channel
     public static final String EXTRA_GROUP_TITLE = "com.tech7.livetv.EXTRA_GROUP_TITLE";  //title of video
     public static final String EXTRA_TVG_LOGO = "com.tech7.livetv.EXTRA_TVG_LOGO";  //tv logo
     public static final String EXTRA_URL = "com.tech7.livetv.EXTRA_URL"; //Url
 
+    private Toolbar toolbar;
+    private ActionBar actionBar;
     private PlayerView playerView;
     private SimpleExoPlayer simpleExoPlayer;
     //public static final String VIDEO_URL = "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";

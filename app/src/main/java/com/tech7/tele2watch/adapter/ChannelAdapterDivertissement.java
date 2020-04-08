@@ -1,4 +1,4 @@
-package com.tech7.livetv.adapter;
+package com.tech7.tele2watch.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.tech7.livetv.R;
-import com.tech7.livetv.object.Channel;
+import com.tech7.tele2watch.R;
+import com.tech7.tele2watch.object.Channel;
 
 import java.util.List;
 
