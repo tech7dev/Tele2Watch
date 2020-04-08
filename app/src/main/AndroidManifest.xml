@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tech7.livetv">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activities.CategoryActivity"></activity>
+        <activity
+            android:name=".activities.ChannelsByCountryActivity"
+            android:parentActivityName=".activities.CountriesActivity"
+            android:theme="@style/MyAppTheme"></activity>
+        <activity
+            android:name=".activities.CountriesActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/MyAppTheme"></activity>
+        <activity
+            android:name=".activities.ChannelsActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/MyAppTheme"></activity>
+        <activity
+            android:name=".activities.IntroActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:theme="@style/MyAppTheme" />
+        <activity
+            android:name=".activities.TvShowActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.TvShowActivity2"
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.ChannelsActivity" />
+        <activity
+            android:name=".activities.TvShowActivity3"
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.CountriesActivity" />
+    </application>
+
+</manifest>

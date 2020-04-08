@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group
+        android:id="@+id/grp_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_allchannels"
+            android:title="Tous les Chaînes"
+            app:actionLayout="@layout/badge_navigation_colored" />
+        <item
+            android:id="@+id/nav_category"
+            android:title="Categories"
+            app:actionLayout="@layout/badge_navigation_colored" />
+        <item
+            android:id="@+id/nav_country"
+            android:title="Pays"
+            app:actionLayout="@layout/badge_navigation_colored" />
+    </group>
+
+    <group
+        android:id="@+id/grp_2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_program"
+            android:title="Programme TV"/>
+
+        <item
+            android:id="@+id/nav_discover"
+            android:title="Découvrir"
+            app:actionLayout="@layout/badge_navigation_colored" />
+
+    </group>
+
+    <group
+        android:id="@+id/grp_3"
+        android:checkableBehavior="single">
+<!--        <item-->
+<!--            android:id="@+id/nav_Settings"-->
+<!--            android:title="Settings" />-->
+
+<!--        <item-->
+<!--            android:id="@+id/nav_privacyPolice"-->
+<!--            android:title="Privacy police" />-->
+
+        <item
+            android:id="@+id/nav_offer"
+            android:title="Nos Offres" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:title="Aide" />
+    </group>
+
+</menu>
