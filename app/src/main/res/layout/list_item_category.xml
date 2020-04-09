@@ -32,6 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:src="@drawable/ic_arrow_downward"
+                    android:tint="@color/whiteSmoke"
+                    android:layout_margin="30dp"
                     app:layout_constraintBottom_toTopOf="@id/txtCategory"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

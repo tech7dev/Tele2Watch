@@ -81,7 +81,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAdapt
 
                         Category category = new Category();
                         category.setCategoryName(categoryObject.getString("CategoryName").toString());
-                        //category.setCategoryImage(categoryObject.getString("CategoryImage").toString());
+                        category.setCategoryImage(categoryObject.getString("CategoryImage").toString());
                         categories.add(category);
                     } catch (JSONException e) {
                         e.printStackTrace();
