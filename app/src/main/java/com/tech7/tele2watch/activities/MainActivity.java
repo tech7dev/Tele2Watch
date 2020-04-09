@@ -463,10 +463,10 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
                     //startActivity(intent);
                 }
 
-                else if (id == R.id.nav_help) {
+                else if (id == R.id.nav_contact) {
                     // Handle the camera action
                     actionBar.setTitle(item.getTitle());
-                    //Intent intent = new Intent(getApplicationContext(),HelpActivity.class);
+                    //Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
                     //startActivity(intent);
                 }
 

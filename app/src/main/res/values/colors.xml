@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#111010</color>
     <color name="colorAccent">#ff0066</color>
 
-    <color name="colorOverlay">#CCFFCC33</color>
-    <color name="colorDarkOverlay">#BF000033</color>
-    <color name="colorAccentOverlay">#A6FF0000</color>
+    <color name="colorOverlay">#CC212121</color>
+    <color name="colorDarkOverlay">#BF111010</color>
+    <color name="colorAccentOverlay">#CCFF0066</color>
 
     <color name="main_background">#fafafa</color>
     <color name="second_background">#e6e9f0</color>

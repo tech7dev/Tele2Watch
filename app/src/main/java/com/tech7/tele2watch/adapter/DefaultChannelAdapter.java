@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,18 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.tech7.tele2watch.R;
 import com.tech7.tele2watch.object.Channel;
+import com.tech7.tele2watch.object.Country;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultChannelAdapter extends RecyclerView.Adapter<DefaultChannelAdapter.ViewHolder> {
-    LayoutInflater inflater;
-    List<Channel> channels;
+public class DefaultChannelAdapter extends RecyclerView.Adapter<DefaultChannelAdapter.ViewHolder> implements Filterable {
+    private LayoutInflater inflater;
+    private List<Channel> channels;
+    private List<Channel> channelsListFull;
+
     private RecyclerViewClickListener listener;
 
     public DefaultChannelAdapter(Context ctx, List<Channel> channels, RecyclerViewClickListener listener){
         this.inflater = LayoutInflater.from(ctx);
         this.channels = channels;
         this.listener = listener;
+        channelsListFull = new ArrayList<>(channels);
     }
 
     @NonNull
@@ -47,6 +54,40 @@ public class DefaultChannelAdapter extends RecyclerView.Adapter<DefaultChannelAd
     public int getItemCount() {
         return channels.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Channel> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(channelsListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Channel channel : channelsListFull) {
+                    if (channel.getGroup_title().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(channel);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            channels.clear();
+            channels.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView Group_title;

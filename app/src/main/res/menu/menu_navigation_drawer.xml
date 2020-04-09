@@ -7,16 +7,23 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_allchannels"
-            android:title="Tous les Chaînes"
+            android:title="Chaînes"
+            android:icon="@drawable/tv"
             app:actionLayout="@layout/badge_navigation_colored" />
         <item
             android:id="@+id/nav_category"
             android:title="Categories"
+            android:icon="@drawable/category"
             app:actionLayout="@layout/badge_navigation_colored" />
         <item
             android:id="@+id/nav_country"
             android:title="Pays"
+            android:icon="@drawable/country"
             app:actionLayout="@layout/badge_navigation_colored" />
+        <item
+            android:id="@+id/nav_favory"
+            android:title="Favoris"
+            android:icon="@drawable/favory"/>
     </group>
 
     <group
@@ -24,33 +31,30 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_program"
-            android:title="Programme TV"/>
+            android:title="Programme TV"
+            android:visible="false"/>
 
         <item
             android:id="@+id/nav_discover"
             android:title="Découvrir"
-            app:actionLayout="@layout/badge_navigation_colored" />
+            app:actionLayout="@layout/badge_navigation_colored"
+            android:visible="false"/>
 
     </group>
 
     <group
         android:id="@+id/grp_3"
         android:checkableBehavior="single">
-<!--        <item-->
-<!--            android:id="@+id/nav_Settings"-->
-<!--            android:title="Settings" />-->
-
-<!--        <item-->
-<!--            android:id="@+id/nav_privacyPolice"-->
-<!--            android:title="Privacy police" />-->
 
         <item
             android:id="@+id/nav_offer"
-            android:title="Nos Offres" />
+            android:title="Nos Offres"
+            android:visible="false"/>
 
         <item
-            android:id="@+id/nav_help"
-            android:title="Aide" />
+            android:id="@+id/nav_contact"
+            android:title="Contact"
+            android:icon="@drawable/phone"/>
     </group>
 
 </menu>
