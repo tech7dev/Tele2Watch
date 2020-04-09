@@ -12,19 +12,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.CategoryActivity"></activity>
+
+        <activity
+            android:name=".activities.ChannelsByCategoryActivity"
+            android:parentActivityName=".activities.CategoryActivity"
+            android:theme="@style/MyAppTheme">
+        </activity>
+        <activity
+            android:name=".activities.CategoryActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/MyAppTheme">
+        </activity>
         <activity
             android:name=".activities.ChannelsByCountryActivity"
             android:parentActivityName=".activities.CountriesActivity"
-            android:theme="@style/MyAppTheme"></activity>
+            android:theme="@style/MyAppTheme">
+        </activity>
         <activity
             android:name=".activities.CountriesActivity"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/MyAppTheme"></activity>
+            android:theme="@style/MyAppTheme">
+        </activity>
         <activity
             android:name=".activities.ChannelsActivity"
             android:parentActivityName=".activities.MainActivity"
-            android:theme="@style/MyAppTheme"></activity>
+            android:theme="@style/MyAppTheme">
+        </activity>
         <activity
             android:name=".activities.IntroActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -49,6 +62,10 @@
             android:name=".activities.TvShowActivity3"
             android:configChanges="orientation"
             android:parentActivityName=".activities.CountriesActivity" />
+        <activity
+            android:name=".activities.TvShowActivity4"
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.ChannelsByCategoryActivity" />
     </application>
 
 </manifest>

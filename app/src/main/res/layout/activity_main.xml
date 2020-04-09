@@ -78,10 +78,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
                         android:paddingTop="10dp"
                         android:paddingRight="15dp"
                         android:text="Films"
+                        android:drawableLeft="@drawable/border_left"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
@@ -95,10 +95,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
                         android:paddingTop="12dp"
                         android:paddingRight="15dp"
                         android:text="News"
+                        android:drawableLeft="@drawable/border_left"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
@@ -112,10 +112,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
                         android:paddingTop="12dp"
                         android:paddingRight="15dp"
                         android:text="Sport"
+                        android:drawableLeft="@drawable/border_left"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
@@ -129,10 +129,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
                         android:paddingTop="12dp"
                         android:paddingRight="15dp"
                         android:text="Documentaires"
+                        android:drawableLeft="@drawable/border_left"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />
@@ -146,10 +146,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
                         android:paddingTop="12dp"
                         android:paddingRight="15dp"
                         android:text="Divertissement"
+                        android:drawableLeft="@drawable/border_left"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                         android:textColor="@color/colorAccent"
                         android:textStyle="bold" />

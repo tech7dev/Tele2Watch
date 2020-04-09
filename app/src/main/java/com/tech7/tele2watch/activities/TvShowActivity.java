@@ -28,9 +28,9 @@ import com.tech7.tele2watch.R;
 
 public class TvShowActivity extends AppCompatActivity {
 
-    public static final String EXTRA_GROUP_TITLE = "com.tech7.livetv.EXTRA_GROUP_TITLE";  //title of video
-    public static final String EXTRA_TVG_LOGO = "com.tech7.livetv.EXTRA_TVG_LOGO";  //tv logo
-    public static final String EXTRA_URL = "com.tech7.livetv.EXTRA_URL"; //Url
+    public static final String EXTRA_GROUP_TITLE = "com.tech7.tele2watch.EXTRA_GROUP_TITLE";  //title of video
+    public static final String EXTRA_TVG_LOGO = "com.tech7.tele2watch.EXTRA_TVG_LOGO";  //tv logo
+    public static final String EXTRA_URL = "com.tech7.tele2watch.EXTRA_URL"; //Url
 
     private Toolbar toolbar;
     private ActionBar actionBar;

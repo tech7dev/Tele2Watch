@@ -24,7 +24,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.tech7.tele2watch.R;
 
-public class TvShowActivity3 extends AppCompatActivity {
+public class TvShowActivity4 extends AppCompatActivity {
 
     //News Channel
     public static final String EXTRA_GROUP_TITLE = "com.tech7.tele2watch.EXTRA_GROUP_TITLE";  //title of video

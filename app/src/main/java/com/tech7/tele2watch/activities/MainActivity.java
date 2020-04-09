@@ -92,9 +92,6 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
         extractSportChannels();
         extractDocumentaryChannels();
         extractDiversChannels();
-
-        //Hide progressbar
-        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
     }
 
     private void initToolbar() {
@@ -314,6 +311,9 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
         adapterDivertissement = new ChannelAdapterDivertissement(getApplication(),channelsDivers,this);
         rcvDiversList.setLayoutManager(layoutManager);
         rcvDiversList.setAdapter(adapterDivertissement);
+
+        //Hide progressbar
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
     }
 
     //handle on item recyclerview click
@@ -437,8 +437,8 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
 
                     // Handle the camera action
                     actionBar.setTitle(item.getTitle());
-                    //Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+                    startActivity(intent);
                 }
 
                 else if (id == R.id.nav_country) {

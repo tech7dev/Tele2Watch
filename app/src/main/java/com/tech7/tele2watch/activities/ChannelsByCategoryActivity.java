@@ -1,12 +1,5 @@
 package com.tech7.tele2watch.activities;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +8,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,30 +32,52 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChannelsActivity extends AppCompatActivity implements DefaultChannelAdapter.RecyclerViewClickListener {
+public class ChannelsByCategoryActivity extends AppCompatActivity implements DefaultChannelAdapter.RecyclerViewClickListener {
+
+    public static final String EXTRA_CATEGORYNAME = "com.tech7.tele2watch.EXTRA_CATEGORYNAME";  //country code
 
     RecyclerView rcvChannelsList;
     DefaultChannelAdapter adapter;
     List<Channel> channels;
     private Toolbar toolbar;
     private ActionBar actionBar;
-    private String titleBar = "Chaînes du Monde";
+    private String titleBar;
+    private String categoryName;
 
-    private static String JSON_URL = "http://test.panzidrc.com/api/channels";   // json url from API to fetch all channels
+    private static String JSON_URL;  // json url from API to fetch all channels
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_channels);
-
-        initToolbar();
+        setContentView(R.layout.activity_channels_bycountry);
 
         //init views
         rcvChannelsList = findViewById(R.id.rcvChannelsList);
         channels = new ArrayList<>();
+
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_CATEGORYNAME)) {
+            Log.d("categoryName_Before::", intent.getStringExtra(EXTRA_CATEGORYNAME));
+            titleBar = intent.getStringExtra(EXTRA_CATEGORYNAME);
+            categoryName = intent.getStringExtra(EXTRA_CATEGORYNAME); //parameter
+
+            URI uri = null;
+            try {
+                uri = new URI(categoryName.replaceAll(" ", "%20"));
+            } catch (URISyntaxException e) {
+
+            }
+            JSON_URL = "http://test.panzidrc.com/api/channels/category?categoryname="+uri.toString();
+            Log.d("JSON_URL::", JSON_URL);
+
+        }
+
+        initToolbar();
 
         //fetch data channels from json url
         extractChannels();
@@ -64,7 +85,6 @@ public class ChannelsActivity extends AppCompatActivity implements DefaultChanne
 
     private void initToolbar() {
         //setting title bar
-        titleBar = "Chaînes du Monde";
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         setSupportActionBar(toolbar);
@@ -78,38 +98,47 @@ public class ChannelsActivity extends AppCompatActivity implements DefaultChanne
     private void extractChannels() {
         // Display the progress bar.
         findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
         //json
         RequestQueue queue = Volley.newRequestQueue(this);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, JSON_URL, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject channelObject = response.getJSONObject(i);
+                if (response.toString() != null) {
+                    Log.d("Channels Selected::", response.toString());
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject channelObject = response.getJSONObject(i);
 
-                        Channel channel = new Channel();
-                        channel.setGroup_title(channelObject.getString("Group_title").toString());
-                        channel.setTvg_logo(channelObject.getString("Tvg_logo").toString());
-                        channel.setChannelUrl(channelObject.getString("ChannelUrl").toString());
-                        channels.add(channel);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            Channel channel = new Channel();
+                            channel.setGroup_title(channelObject.getString("Group_title").toString());
+                            channel.setTvg_logo(channelObject.getString("Tvg_logo").toString());
+                            channel.setChannelUrl(channelObject.getString("ChannelUrl").toString());
+                            channels.add(channel);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
 
-                setAdapter();
+                    setAdapter();
+                } else {
+                    Toast.makeText(ChannelsByCategoryActivity.this, "Echec de chargement. Lancement de la 2eme tentative", Toast.LENGTH_LONG);
+                    extractChannels();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("tagNews", "onErrorResponse: " + error.getMessage());
-
+                Toast.makeText(ChannelsByCategoryActivity.this, "Erreur de chargement, veuillez reesayer", Toast.LENGTH_SHORT);
                 //Hide progressbar
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
 
         queue.add(jsonArrayRequest);
+
     }
 
     private void setAdapter() {
@@ -133,10 +162,10 @@ public class ChannelsActivity extends AppCompatActivity implements DefaultChanne
     public void onViewClicked(View v, int position) {
         if (!channels.isEmpty()) {
             Log.d("ChannelsActivity-Click", channels.get(position).getGroup_title() + ":: " + channels.get(position).getChannelUrl());
-            Intent intent = new Intent(ChannelsActivity.this, TvShowActivity2.class);
-            intent.putExtra(TvShowActivity2.EXTRA_GROUP_TITLE, channels.get(position).getGroup_title());
-            intent.putExtra(TvShowActivity2.EXTRA_TVG_LOGO, channels.get(position).getTvg_logo());
-            intent.putExtra(TvShowActivity2.EXTRA_URL, channels.get(position).getChannelUrl());
+            Intent intent = new Intent(ChannelsByCategoryActivity.this, TvShowActivity3.class);
+            intent.putExtra(TvShowActivity3.EXTRA_GROUP_TITLE, channels.get(position).getGroup_title());
+            intent.putExtra(TvShowActivity3.EXTRA_TVG_LOGO, channels.get(position).getTvg_logo());
+            intent.putExtra(TvShowActivity3.EXTRA_URL, channels.get(position).getChannelUrl());
             //start tv activity
             startActivity(intent);
         }
