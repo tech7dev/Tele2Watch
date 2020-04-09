@@ -64,7 +64,7 @@ public class ChannelsActivity extends AppCompatActivity implements DefaultChanne
 
     private void initToolbar() {
         //setting title bar
-        titleBar = "Tous les Chaînes du Monde";
+        titleBar = "Chaînes du Monde";
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         setSupportActionBar(toolbar);

@@ -14,7 +14,7 @@
         android:layout_marginRight="10dp"
         android:layout_centerInParent="true"
         android:clickable="true"
-        app:cardBackgroundColor="@color/grey_600"
+        app:cardBackgroundColor="@color/grey_800"
         app:cardCornerRadius="7dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
