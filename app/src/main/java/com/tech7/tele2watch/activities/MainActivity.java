@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
 
     private Boolean wifiConnected = false;
     private Boolean mobileConnected = false;
+    private Button btnTryAgain;
+
     private RecyclerView rcvFilmList, rcvNewsList, rcvDocumentaryList, rcvSportList, rcvDiversList;
 
     private ChannelAdapterNews adapterNews;
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
 
         //internet connection is ready
         if(networkInfo != null && networkInfo.isConnected()){
-            wifiConnected = networkInfo.getType()== ConnectivityManager.TYPE_VPN;
+            wifiConnected = networkInfo.getType()== ConnectivityManager.TYPE_WIFI;
             mobileConnected = networkInfo.getType()==ConnectivityManager.TYPE_MOBILE;
 
             if(wifiConnected || mobileConnected){
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
                 rcvSportList = findViewById(R.id.rcvSportList);
                 rcvDocumentaryList = findViewById(R.id.rcvDocumentaryList);
                 rcvDiversList = findViewById(R.id.rcvDiversList);
+
 
                 channelsNews = new ArrayList<>();
                 channelsFilm = new ArrayList<>();
@@ -115,6 +119,17 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
         }
         else{
             //not connected
+            // Display the panel
+            findViewById(R.id.networkPanel).setVisibility(View.VISIBLE);
+            btnTryAgain = findViewById(R.id.btnTryAgain);
+            btnTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Display the panel
+                    findViewById(R.id.networkPanel).setVisibility(View.INVISIBLE);
+                    checkNetworkConnection();
+                }
+            });
         }
     }
 
@@ -487,7 +502,7 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
                     //startActivity(intent);
                 }
 
-                else if (id == R.id.nav_contact) {
+                else if (id == R.id.nav_contactus) {
                     // Handle the camera action
                     actionBar.setTitle(item.getTitle());
                     //Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
