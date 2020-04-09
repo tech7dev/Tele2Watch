@@ -9,7 +9,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -44,14 +47,16 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
         ChannelAdapterFilm.RecyclerViewClickListenerFilm, ChannelAdapterSport.RecyclerViewClickListenerSport,
         ChannelAdapterDocumentary.RecyclerViewClickListenerDocumentary, ChannelAdapterDivertissement.RecyclerViewClickListenerDivertissement{
 
-    RecyclerView rcvFilmList, rcvNewsList, rcvDocumentaryList, rcvSportList, rcvDiversList;
+    private Boolean wifiConnected = false;
+    private Boolean mobileConnected = false;
+    private RecyclerView rcvFilmList, rcvNewsList, rcvDocumentaryList, rcvSportList, rcvDiversList;
 
-    ChannelAdapterNews adapterNews;
-    ChannelAdapterFilm adapterFilm;
-    ChannelAdapterSport adapterSport;
-    ChannelAdapterDocumentary adapterDocumentary;
-    ChannelAdapterDivertissement adapterDivertissement;
-    List<Channel> channelsFilm, channelsNews, channelsSport, channelsDocumentary, channelsDivers;
+    private ChannelAdapterNews adapterNews;
+    private ChannelAdapterFilm adapterFilm;
+    private ChannelAdapterSport adapterSport;
+    private ChannelAdapterDocumentary adapterDocumentary;
+    private ChannelAdapterDivertissement adapterDivertissement;
+    private List<Channel> channelsFilm, channelsNews, channelsSport, channelsDocumentary, channelsDivers;
 
     //private static String JSON_URL = "http://test.panzidrc.com/api/channels";   // json url from API to fetch all channels
     private static String JSON_URL_NEWS = "http://test.panzidrc.com/api/channels/news";   // json url from API to fetch news channels
@@ -69,29 +74,48 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initToolbar();
-        initNavigationMenu();
+        //check network
+        checkNetworkConnection();
+    }
 
-        rcvFilmList = findViewById(R.id.rcvFilmList);
-        rcvNewsList = findViewById(R.id.rcvNewsList);
-        rcvSportList = findViewById(R.id.rcvSportList);
-        rcvDocumentaryList = findViewById(R.id.rcvDocumentaryList);
-        rcvDiversList = findViewById(R.id.rcvDiversList);
+    private void checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        channelsNews = new ArrayList<>();
-        channelsFilm = new ArrayList<>();
-        channelsSport = new ArrayList<>();
-        channelsDocumentary = new ArrayList<>();
-        channelsDivers = new ArrayList<>();
+        //internet connection is ready
+        if(networkInfo != null && networkInfo.isConnected()){
+            wifiConnected = networkInfo.getType()== ConnectivityManager.TYPE_VPN;
+            mobileConnected = networkInfo.getType()==ConnectivityManager.TYPE_MOBILE;
 
-        // Display the progress bar.
-        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+            if(wifiConnected || mobileConnected){
+                initToolbar();
+                initNavigationMenu();
 
-        extractFilmChannels();
-        extractNewsChannels();
-        extractSportChannels();
-        extractDocumentaryChannels();
-        extractDiversChannels();
+                rcvFilmList = findViewById(R.id.rcvFilmList);
+                rcvNewsList = findViewById(R.id.rcvNewsList);
+                rcvSportList = findViewById(R.id.rcvSportList);
+                rcvDocumentaryList = findViewById(R.id.rcvDocumentaryList);
+                rcvDiversList = findViewById(R.id.rcvDiversList);
+
+                channelsNews = new ArrayList<>();
+                channelsFilm = new ArrayList<>();
+                channelsSport = new ArrayList<>();
+                channelsDocumentary = new ArrayList<>();
+                channelsDivers = new ArrayList<>();
+
+                // Display the progress bar.
+                findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+                extractFilmChannels();
+                extractNewsChannels();
+                extractSportChannels();
+                extractDocumentaryChannels();
+                extractDiversChannels();
+            }
+        }
+        else{
+            //not connected
+        }
     }
 
     private void initToolbar() {
