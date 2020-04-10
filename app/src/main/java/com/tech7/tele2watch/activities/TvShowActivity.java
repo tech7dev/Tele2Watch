@@ -53,23 +53,8 @@ public class TvShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_show);
 
-        //initNavigationMenu();
-        Intent intent = getIntent();
-        if(intent.hasExtra(EXTRA_URL)) {
-            Log.d("TvShowActivity-URL", intent.getStringExtra(EXTRA_GROUP_TITLE));
-            setTitle(intent.getStringExtra(EXTRA_GROUP_TITLE));
-            initExoPlayer(intent.getStringExtra(EXTRA_URL));
-        }
-
-        //hide actionbar if orientation is landscape
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getSupportActionBar().hide();
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        else {
-            getSupportActionBar().show();
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
+        //check internet connection
+        checkNetworkConnection();
 
     }
 
@@ -83,7 +68,22 @@ public class TvShowActivity extends AppCompatActivity {
             mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
 
             if (wifiConnected || mobileConnected) {
+                Intent intent = getIntent();
+                if(intent.hasExtra(EXTRA_URL)) {
+                    Log.d("TvShowActivity-URL", intent.getStringExtra(EXTRA_GROUP_TITLE));
+                    setTitle(intent.getStringExtra(EXTRA_GROUP_TITLE));
+                    initExoPlayer(intent.getStringExtra(EXTRA_URL));
+                }
 
+                //hide actionbar if orientation is landscape
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    getSupportActionBar().hide();
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
+                else {
+                    getSupportActionBar().show();
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
             }
         }
         else{
@@ -101,7 +101,6 @@ public class TvShowActivity extends AppCompatActivity {
             });
         }
     }
-
 
     private void initExoPlayer(String JSON_URL_M3U8) {
         playerView = findViewById(R.id.exo_player);

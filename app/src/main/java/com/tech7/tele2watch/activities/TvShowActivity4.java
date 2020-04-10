@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +26,10 @@ import com.google.android.exoplayer2.util.Util;
 import com.tech7.tele2watch.R;
 
 public class TvShowActivity4 extends AppCompatActivity {
+
+    private Boolean wifiConnected = false;
+    private Boolean mobileConnected = false;
+    private Button btnTryAgain;
 
     //News Channel
     public static final String EXTRA_GROUP_TITLE = "com.tech7.tele2watch.EXTRA_GROUP_TITLE";  //title of video
