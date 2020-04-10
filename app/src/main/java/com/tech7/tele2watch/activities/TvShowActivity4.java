@@ -1,10 +1,14 @@
 package com.tech7.tele2watch.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -45,24 +49,52 @@ public class TvShowActivity4 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_show);
 
-        //initNavigationMenu();
-        Intent intent = getIntent();
-        if(intent.hasExtra(EXTRA_URL)) {
-            Log.d("TvShowActivity-URL", intent.getStringExtra(EXTRA_GROUP_TITLE));
-            setTitle(intent.getStringExtra(EXTRA_GROUP_TITLE));
-            initExoPlayer(intent.getStringExtra(EXTRA_URL));
-        }
+        checkNetworkConnection();
 
-        //hide actionbar if orientation is landscape
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getSupportActionBar().hide();
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        else {
-            getSupportActionBar().show();
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
+    }
 
+    private void checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        //internet connection is ready
+        if (networkInfo != null && networkInfo.isConnected()) {
+            wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+
+            if (wifiConnected || mobileConnected) {
+                Intent intent = getIntent();
+                if(intent.hasExtra(EXTRA_URL)) {
+                    Log.d("TvShowActivity-URL", intent.getStringExtra(EXTRA_GROUP_TITLE));
+                    setTitle(intent.getStringExtra(EXTRA_GROUP_TITLE));
+                    initExoPlayer(intent.getStringExtra(EXTRA_URL));
+                }
+
+                //hide actionbar if orientation is landscape
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    getSupportActionBar().hide();
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
+                else {
+                    getSupportActionBar().show();
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
+            }
+        }
+        else{
+            //not connected
+            // Display the panel
+            findViewById(R.id.networkPanel).setVisibility(View.VISIBLE);
+            btnTryAgain = findViewById(R.id.btnTryAgain);
+            btnTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Display the panel
+                    findViewById(R.id.networkPanel).setVisibility(View.INVISIBLE);
+                    checkNetworkConnection();
+                }
+            });
+        }
     }
 
     private void initExoPlayer(String JSON_URL_M3U8) {
