@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,6 +41,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountriesActivity extends AppCompatActivity implements CountriesAdapter.RecyclerViewClickListenerCountry{
+
+    private Boolean wifiConnected = false;
+    private Boolean mobileConnected = false;
+    private Button btnTryAgain;
+
     RecyclerView rcvCountries;
     CountriesAdapter adapter;
     List<Country> countries;
@@ -52,14 +61,43 @@ public class CountriesActivity extends AppCompatActivity implements CountriesAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countries);
 
-        initToolbar();
+        checkNetworkConnection();
+    }
 
-        //init views
-        rcvCountries = findViewById(R.id.rcvCountries);
-        countries = new ArrayList<>();
+    private void checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        //fetch data channels from json url
-        extractCountries();
+        //internet connection is ready
+        if (networkInfo != null && networkInfo.isConnected()) {
+            wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+
+            if (wifiConnected || mobileConnected) {
+                initToolbar();
+
+                //init views
+                rcvCountries = findViewById(R.id.rcvCountries);
+                countries = new ArrayList<>();
+
+                //fetch data channels from json url
+                extractCountries();
+            }
+        }
+        else{
+            //not connected
+            // Display the panel
+            findViewById(R.id.networkPanel).setVisibility(View.VISIBLE);
+            btnTryAgain = findViewById(R.id.btnTryAgain);
+            btnTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Display the panel
+                    findViewById(R.id.networkPanel).setVisibility(View.INVISIBLE);
+                    checkNetworkConnection();
+                }
+            });
+        }
     }
 
     private void initToolbar() {

@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements ChannelAdapterNew
                 rcvDocumentaryList = findViewById(R.id.rcvDocumentaryList);
                 rcvDiversList = findViewById(R.id.rcvDiversList);
 
-
                 channelsNews = new ArrayList<>();
                 channelsFilm = new ArrayList<>();
                 channelsSport = new ArrayList<>();

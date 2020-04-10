@@ -1,6 +1,9 @@
 package com.tech7.tele2watch.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -39,6 +43,10 @@ import java.util.List;
 
 public class ChannelsByCategoryActivity extends AppCompatActivity implements DefaultChannelAdapter.RecyclerViewClickListener {
 
+    private Boolean wifiConnected = false;
+    private Boolean mobileConnected = false;
+    private Button btnTryAgain;
+
     public static final String EXTRA_CATEGORYNAME = "com.tech7.tele2watch.EXTRA_CATEGORYNAME";  //country code
 
     RecyclerView rcvChannelsList;
@@ -56,31 +64,61 @@ public class ChannelsByCategoryActivity extends AppCompatActivity implements Def
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channels_bycountry);
 
-        //init views
-        rcvChannelsList = findViewById(R.id.rcvChannelsList);
-        channels = new ArrayList<>();
+        //check network
+        checkNetworkConnection();
+    }
 
-        Intent intent = getIntent();
-        if (intent.hasExtra(EXTRA_CATEGORYNAME)) {
-            Log.d("categoryName_Before::", intent.getStringExtra(EXTRA_CATEGORYNAME));
-            titleBar = intent.getStringExtra(EXTRA_CATEGORYNAME);
-            categoryName = intent.getStringExtra(EXTRA_CATEGORYNAME); //parameter
+    private void checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-            URI uri = null;
-            try {
-                uri = new URI(categoryName.replaceAll(" ", "%20"));
-            } catch (URISyntaxException e) {
+        //internet connection is ready
+        if (networkInfo != null && networkInfo.isConnected()) {
+            wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
 
+            if (wifiConnected || mobileConnected) {
+                //init views
+                rcvChannelsList = findViewById(R.id.rcvChannelsList);
+                channels = new ArrayList<>();
+
+                Intent intent = getIntent();
+                if (intent.hasExtra(EXTRA_CATEGORYNAME)) {
+                    Log.d("categoryName_Before::", intent.getStringExtra(EXTRA_CATEGORYNAME));
+                    titleBar = intent.getStringExtra(EXTRA_CATEGORYNAME);
+                    categoryName = intent.getStringExtra(EXTRA_CATEGORYNAME); //parameter
+
+                    URI uri = null;
+                    try {
+                        uri = new URI(categoryName.replaceAll(" ", "%20"));
+                    } catch (URISyntaxException e) {
+
+                    }
+                    JSON_URL = "http://test.panzidrc.com/api/channels/category?categoryname="+uri.toString();
+                    Log.d("JSON_URL::", JSON_URL);
+
+                }
+
+                initToolbar();
+
+                //fetch data channels from json url
+                extractChannels();
             }
-            JSON_URL = "http://test.panzidrc.com/api/channels/category?categoryname="+uri.toString();
-            Log.d("JSON_URL::", JSON_URL);
-
         }
-
-        initToolbar();
-
-        //fetch data channels from json url
-        extractChannels();
+        else{
+            //not connected
+            // Display the panel
+            findViewById(R.id.networkPanel).setVisibility(View.VISIBLE);
+            btnTryAgain = findViewById(R.id.btnTryAgain);
+            btnTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Display the panel
+                    findViewById(R.id.networkPanel).setVisibility(View.INVISIBLE);
+                    checkNetworkConnection();
+                }
+            });
+        }
     }
 
     private void initToolbar() {

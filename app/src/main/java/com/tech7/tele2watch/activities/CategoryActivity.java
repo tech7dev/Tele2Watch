@@ -7,10 +7,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +37,10 @@ import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity implements CategoryAdapter.RecyclerViewClickListenerCategory {
 
+    private Boolean wifiConnected = false;
+    private Boolean mobileConnected = false;
+    private Button btnTryAgain;
+
     private Toolbar toolbar;
     private ActionBar actionBar;
     private String titleBar;
@@ -47,11 +55,41 @@ public class CategoryActivity extends AppCompatActivity implements CategoryAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        initToolbar();
-        categories = new ArrayList<>();
-        rcvCategories = findViewById(R.id.rcvCategories);
+        //check internet connection
+        checkNetworkConnection();
+    }
 
-        extractCategories();
+    private void checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        //internet connection is ready
+        if (networkInfo != null && networkInfo.isConnected()) {
+            wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+
+            if (wifiConnected || mobileConnected) {
+                initToolbar();
+                categories = new ArrayList<>();
+                rcvCategories = findViewById(R.id.rcvCategories);
+
+                extractCategories();
+            }
+        }
+        else{
+            //not connected
+            // Display the panel
+            findViewById(R.id.networkPanel).setVisibility(View.VISIBLE);
+            btnTryAgain = findViewById(R.id.btnTryAgain);
+            btnTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Display the panel
+                    findViewById(R.id.networkPanel).setVisibility(View.INVISIBLE);
+                    checkNetworkConnection();
+                }
+            });
+        }
     }
 
     private void initToolbar() {

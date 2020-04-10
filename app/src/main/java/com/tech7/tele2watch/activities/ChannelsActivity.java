@@ -7,7 +7,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -38,6 +42,11 @@ import java.util.List;
 
 public class ChannelsActivity extends AppCompatActivity implements DefaultChannelAdapter.RecyclerViewClickListener {
 
+    private Boolean wifiConnected = false;
+    private Boolean mobileConnected = false;
+    private Button btnTryAgain;
+
+
     RecyclerView rcvChannelsList;
     DefaultChannelAdapter adapter;
     List<Channel> channels;
@@ -52,14 +61,45 @@ public class ChannelsActivity extends AppCompatActivity implements DefaultChanne
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channels);
 
-        initToolbar();
+        //check internet connection
+        checkNetworkConnection();
+    }
 
-        //init views
-        rcvChannelsList = findViewById(R.id.rcvChannelsList);
-        channels = new ArrayList<>();
+    private void checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        //fetch data channels from json url
-        extractChannels();
+        //internet connection is ready
+        if (networkInfo != null && networkInfo.isConnected()) {
+            wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+
+            if (wifiConnected || mobileConnected) {
+
+                initToolbar();
+
+                //init views
+                rcvChannelsList = findViewById(R.id.rcvChannelsList);
+                channels = new ArrayList<>();
+
+                //fetch data channels from json url
+                extractChannels();
+            }
+        }
+        else{
+            //not connected
+            // Display the panel
+            findViewById(R.id.networkPanel).setVisibility(View.VISIBLE);
+            btnTryAgain = findViewById(R.id.btnTryAgain);
+            btnTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Display the panel
+                    findViewById(R.id.networkPanel).setVisibility(View.INVISIBLE);
+                    checkNetworkConnection();
+                }
+            });
+        }
     }
 
     private void initToolbar() {

@@ -33,8 +33,7 @@ public class TvShowActivity4 extends AppCompatActivity {
 
     private PlayerView playerView;
     private SimpleExoPlayer simpleExoPlayer;
-    //public static final String VIDEO_URL = "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";
-    //private String m3u8url = "http://static.france24.com:80/live/F24_FR_HI_HLS/live_tv.m3u8?fluxustv.m3u8";
+    //private String m3u8url = "http://static.france24.com:80/live/F24_FR_HI_HLS/live_tv.m3u8?fluxustv.m3u8"; //test m3u8 file
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
