@@ -32,6 +32,7 @@
             android:id="@+id/imgBadNetwork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/ic_mood_bad"/>
 
         <TextView
